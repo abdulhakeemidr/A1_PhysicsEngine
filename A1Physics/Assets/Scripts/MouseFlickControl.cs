@@ -10,16 +10,24 @@ public class MouseFlickControl : MonoBehaviour
 
     private Vector3 init;
     private Vector3 final;
+    private Vector3 diff;
+    [HideInInspector]
+    public Vector3 move;
+
+    private Vector3 InitPos;
     // Start is called before the first frame update
     void Start()
     {
         rb = GetComponent<Rigidbody>();
+        InitPos = transform.position;
+        move = Vector3.zero;
     }
 
     // Update is called once per frame
     void Update()
     {
         mouseKick();
+        ResetBall();
     }
 
     void mouseKick()
@@ -29,32 +37,38 @@ public class MouseFlickControl : MonoBehaviour
             init = Input.mousePosition;
             final = Input.mousePosition;
 
-            //Debug.Log("a");
+            diff = final - init;
+
+            move.z = diff.y;
+            move.x = diff.x / 4.0f;
+            move.y = diff.y / 4.0f;
         }
 
         if (Input.GetMouseButtonUp(0))
         {
             final = Input.mousePosition;
+            diff = (final - init) / 2.0f;
 
-            if (init.x > final.x)
+
+            if (diff.y > 0.0 * Screen.height)
             {
-                Debug.Log("Left");
+                move.z = diff.y;
+                move.x = diff.x / 4.0f;
+                move.y = diff.y / 4.0f;
+
+                // move = Vector3.Normalize(move);
+
+                rb.AddForce(0.2f * move, ForceMode.Impulse);
             }
-            else if(init.x < final.x)
-            {
-                Debug.Log("Right");
-            }
+        }
+    }
 
-
-            Vector3 diff = final - init;
-            Vector3 move;
-            move.z = diff.y;
-            move.x = diff.x;
-            move.y = diff.z;
-
-            move = Vector3.Normalize(move);
-
-            rb.AddForce(move * 10.0f, ForceMode.Impulse);
+    void ResetBall()
+    {
+        if(Input.GetKeyDown(KeyCode.Space))
+        {
+            transform.position = InitPos;
+            rb.velocity = Vector3.zero;
         }
     }
 }
