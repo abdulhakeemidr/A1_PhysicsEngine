@@ -39,6 +39,7 @@ public class MouseFlickControl : MonoBehaviour
 
             diff = final - init;
 
+            // finds the move vector for trajectory calculations while mouse is still down
             move.z = diff.y;
             move.x = diff.x / 4.0f;
             move.y = diff.y / 4.0f;
@@ -52,6 +53,9 @@ public class MouseFlickControl : MonoBehaviour
 
             if (diff.y > 0.0 * Screen.height)
             {
+                // z is the forward vector of the ball. 
+                // This is my method of converting the 2d mouse movement
+                // into a 3d vector direction of the ball.
                 move.z = diff.y;
                 move.x = diff.x / 4.0f;
                 move.y = diff.y / 4.0f;
@@ -65,6 +69,7 @@ public class MouseFlickControl : MonoBehaviour
 
     void ResetBall()
     {
+        // Reset the position and velocity of the ball
         if(Input.GetKeyDown(KeyCode.Space))
         {
             transform.position = InitPos;

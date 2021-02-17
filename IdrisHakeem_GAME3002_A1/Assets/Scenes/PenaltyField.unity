@@ -587,7 +587,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Press Space Bar to retake free kick
+  m_Text: Press Space Bar to retake penalty
 --- !u!222 &1166847479
 CanvasRenderer:
   m_ObjectHideFlags: 0
